@@ -71,3 +71,13 @@ END;
 
 SELECT produto, TOTAL_VALOR(preco, quantidade) AS total FROM produtos;
 --Função Personalizada--
+
+--Funções de Agregação--
+SELECT COUNT(*) AS quantidade_produto FROM produtos;
+
+SELECT produto, MAX(preco) AS maior_preco FROM produtos GROUP BY produto;
+
+SELECT produto, MIN(preco) AS menor_preco FROM produtos GROUP BY produto;
+
+SELECT SUM(IF(quantidade > 0, quantidade, 0)) AS quantidade_estoque FROM produtos;
+--Funções de Agregação--
