@@ -81,3 +81,47 @@ SELECT produto, MIN(preco) AS menor_preco FROM produtos GROUP BY produto;
 
 SELECT SUM(IF(quantidade > 0, quantidade, 0)) AS quantidade_estoque FROM produtos;
 --Funções de Agregação--
+
+--Criando funções--
+DELIMITER //
+CREATE FUNCTION fatorial(numero INT)
+RETURNS INT DETERMINISTIC
+BEGIN
+	DECLARE resultado INT;
+	SET resultado = 1;
+	WHILE numero > 1 DO
+		SET resultado = resultado * numero;
+	        SET numero = numero - 1;
+	END WHILE;
+	RETURN resultado;
+END;
+// DELIMITER ;
+
+DELIMITER //
+CREATE FUNCTION exponencial(numero INT, x INT)
+RETURNS INT DETERMINISTIC
+BEGIN
+    DECLARE resultado INT;
+    SET resultado = numero;
+    WHILE x > 1 DO
+        SET resultado = resultado * numero;
+        SET x = x - 1;
+    END WHILE;
+    RETURN resultado;
+END;
+// DELIMITER ;
+
+DELIMITER //
+CREATE FUNCTION palindromo(palavra VARCHAR(255))
+RETURNS INT DETERMINISTIC
+BEGIN
+	DECLARE inverso VARCHAR(255);
+    	SELECT REVERSE(palavra) INTO invertida;
+    	IF palavra = invertida THEN
+		RETURN 1;
+	ELSE
+		RETURN 0;
+	END IF;
+END;
+// DELIMITER ;
+--Criando funções--
