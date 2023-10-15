@@ -59,3 +59,15 @@ SELECT produto,
     AS categoria_produto FROM produtos;
 --Funções de Controle de Fluxo--
 
+--Função Personalizada--
+CREATE FUNCTION TOTAL_VALOR(preco DECIMAL(15, 3), quantidade INT)
+RETURNS DECIMAL(15, 3) DETERMINISTIC
+BEGIN
+    DECLARE total DECIMAL(15, 3);
+    SET total = preco * quantidade;
+    RETURN total;
+END;
+// DELIMITER ;
+
+SELECT produto, TOTAL_VALOR(preco, quantidade) AS total FROM produtos;
+--Função Personalizada--
