@@ -55,3 +55,18 @@ BEGIN
     CLOSE cur;
 END //
 DELIMITER ;
+
+4. 
+DELIMITER //
+CREATE FUNCTION media_livros_por_editora()
+RETURNS DECIMAL(10, 2)
+BEGIN
+    DECLARE total_livros INT;
+    DECLARE total_editoras INT;
+    DECLARE media DECIMAL(10, 2);
+    SELECT COUNT(*) INTO total_livros FROM Livro;
+    SELECT COUNT(*) INTO total_editoras FROM Editora;
+    SET media = total_livros / total_editoras;
+    RETURN media;
+END //
+DELIMITER ;
