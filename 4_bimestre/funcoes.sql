@@ -46,3 +46,16 @@ SELECT MIN(data_evento) AS primeiro, MAX(data_evento) AS segundo, DATEDIFF(MAX(d
 
 SELECT data_evento, DAYNAME(data_evento) AS dia_semana FROM eventos;
 --Funções de Data--
+
+--Funções de Controle de Fluxo--
+SELECT produto, IF(quantidade > 0, 'Em estoque', 'Fora de estoque') AS quantidade_estoque FROM produtos;
+
+SELECT produto, 
+	CASE
+        WHEN preco < 1000 THEN 'Barato'
+        WHEN preco >= 2000 AND preco < 4000 THEN 'Médio'
+        ELSE 'Caro'
+    END 
+    AS categoria_produto FROM produtos;
+--Funções de Controle de Fluxo--
+
