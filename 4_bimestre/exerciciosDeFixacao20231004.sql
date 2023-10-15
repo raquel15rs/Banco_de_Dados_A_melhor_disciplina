@@ -70,3 +70,25 @@ BEGIN
     RETURN media;
 END //
 DELIMITER ;
+
+5. 
+DELIMITER //
+CREATE FUNCTION autores_sem_livros()
+RETURNS TABLE (nome_autor VARCHAR(255))
+BEGIN
+    CREATE TEMPORARY TABLE TempTable (nome_autor VARCHAR(255));
+    DECLARE autor_id INT;
+    DECLARE cur CURSOR FOR
+    SELECT A.id
+    FROM Autor A
+    WHERE NOT EXISTS (SELECT 1 FROM Livro_Autor LA WHERE LA.id_autor = A.id);
+    OPEN cur;
+    FETCH cur INTO autor_id;
+    WHILE FETCH_STATUS = 0 DO
+        INSERT INTO TempTable (nome_autor) SELECT CONCAT(primeiro_nome, ' ', ultimo_nome) FROM Autor WHERE id = autor_id;
+        FETCH cur INTO autor_id;
+    END WHILE;
+    CLOSE cur;
+    RETURN (SELECT * FROM TempTable);
+END //
+DELIMITER ;
