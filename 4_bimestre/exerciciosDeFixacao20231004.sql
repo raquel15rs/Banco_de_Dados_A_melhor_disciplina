@@ -36,3 +36,22 @@ BEGIN
     RETURN (SELECT * FROM TempTable);
 END //
 DELIMITER ;
+
+3.
+DELIMITER //
+CREATE FUNCTION atualizar_resumos()
+RETURNS VOID
+BEGIN
+    DECLARE livro_id INT;
+    DECLARE resumo_atual TEXT;
+    DECLARE cur CURSOR FOR
+    SELECT id, resumo FROM Livro;
+    OPEN cur;
+    FETCH cur INTO livro_id, resumo_atual;
+    WHILE FETCH_STATUS = 0 DO
+        UPDATE Livro SET resumo = CONCAT(resumo_atual, ' Este é um excelente livro!') WHERE id = livro_id;
+        FETCH cur INTO livro_id, resumo_atual;
+    END WHILE;
+    CLOSE cur;
+END //
+DELIMITER ;
