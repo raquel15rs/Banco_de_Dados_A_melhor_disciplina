@@ -28,3 +28,21 @@ SELECT produto, ABS(quantidade) AS quantidade_absoluta FROM produtos;
 
 SELECT produto, AVG(preco) AS preco_medio FROM produtos GROUP BY produto;
 --Funções Numéricas--
+
+--Funções de Data--
+CREATE TABLE eventos (
+    data_evento DATE
+);
+INSERT INTO eventos (data_evento) VALUES
+('2007-01-01'),
+('1912-04-16'),
+('2006-09-29'),
+('2006-09-26'),
+('1987-07-27');
+
+INSERT INTO eventos (data_evento) VALUES (NOW());
+
+SELECT MIN(data_evento) AS primeiro, MAX(data_evento) AS segundo, DATEDIFF(MAX(data_evento), MIN(data_evento)) AS distancia_tempo FROM eventos;
+
+SELECT data_evento, DAYNAME(data_evento) AS dia_semana FROM eventos;
+--Funções de Data--
