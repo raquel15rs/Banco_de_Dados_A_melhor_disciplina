@@ -23,3 +23,16 @@ CREATE TRIGGER cliente_vazio
 	END IF;
 //
 DELIMITER ;
+
+DELIMITER //
+CREATE TRIGGER apos_inserir_pedidos
+	BEFORE INSERT ON Pedidos
+    FOR EACH ROW
+    UPDATE Produtos SET estoque = estoque - new.quantidade WHERE id = new.produto_id;
+    DECLARE x_estoque INT;
+    SET x_estoque = (SELECT estoque FROM Produtos WHERE id = NEW.produto_id);
+    IF x_estoque < 5 THEN
+		INSERT INTO Auditoria (mensagem) VALUES ('Menos de 5 no estoque')
+	END IF;
+//
+DELIMITER ;
